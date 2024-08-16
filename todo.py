@@ -18,12 +18,17 @@
   # Get User Input
     # Handle Each Option
     # Loop Until Exit
+
 TO_DO_LIST = []
+
 MENU_OPTIONS = ["1. View Tasks", "2. Add New Task", "3. Complete Task", "4. Exit"]
     
     # Display Menu
 def displayMenu():
-    print(MENU_OPTIONS)
+    # print(MENU_OPTIONS)
+    newMenu =('\n'.join(str(a)for a in MENU_OPTIONS))
+    print(newMenu)
+
 
 def addTask():
     #add task logic here
@@ -32,19 +37,13 @@ def addTask():
     print("Task Added")
     print(TO_DO_LIST)
     main()
-    
+
+
 def viewList():
-    # display all tasks
-    # i = 0
-    # while i < len(TO_DO_LIST):
-    #     print(TO_DO_LIST[i])
-    #     i = i + 1
-    #     break
-    # return
-    print(MENU_OPTIONS)
-    for newMenu in MENU_OPTIONS:
-        print(newMenu, end=',')
+    print('penis')
+    print(TO_DO_LIST)
     main()
+
 
 def completeTask():
     #complete individual task
@@ -52,24 +51,34 @@ def completeTask():
     TO_DO_LIST.remove(removeTask)
     main()
 
+
 def exit():
-     print("later nerd")
+     print("OHHHHH MY GOD MY WIENER IS SOOOOO SMALL BROOOOOO")
      return
 
 
 def main():
-        displayMenu() 
-        userInput = int(input("Please Select Task: "))
-        if userInput < 0:
-            print("Please enter a number between 1 and 4")
-        elif userInput > 4:
-            print("Please enter a number between 1 and 4")
-            if userInput == 1:
-                viewList()
-            elif userInput == 2:
-                addTask()
-            elif userInput == 3:
-                completeTask()
-        
-
+        # print("\nPlease select an option by entering the corresponding number. \n") 
+        displayMenu()
+        while True:
+            userInput = int(input("\nPlease select an option by entering a number between 1 and 4:"))
+            if userInput < 0:
+                print("Please enter a number between 1 and 4")
+            elif userInput > 4:
+                print("Please enter a number between 1 and 4")
+            else:
+                if userInput == 1:
+                    print('view')
+                    viewList()
+                elif userInput == 2:
+                    print('add')
+                    addTask()
+                elif userInput == 3:
+                    print('complete')
+                    completeTask()
+                else:
+                    if userInput == 4:
+                        print('exit')
+                        exit()
+                        break
 main()
