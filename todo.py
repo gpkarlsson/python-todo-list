@@ -19,66 +19,78 @@
     # Handle Each Option
     # Loop Until Exit
 
+
 TO_DO_LIST = []
 
 MENU_OPTIONS = ["1. View Tasks", "2. Add New Task", "3. Complete Task", "4. Exit"]
-    
-    # Display Menu
+
+
+# Loop through tasks assigning a number each task 
+def enumTasks():
+    for index, newTask in enumerate(TO_DO_LIST):
+        print(f"{index + 1}. {newTask}")
+
+
+# Display Menu
 def displayMenu():
-    # print(MENU_OPTIONS)
-    newMenu =('\n'.join(str(a)for a in MENU_OPTIONS))
-    print(newMenu)
+    print(('\n'.join(str(a)for a in MENU_OPTIONS)))
 
 
+# Add a new task
 def addTask():
-    #add task logic here
     newTask = input("Please add a task: ")
     TO_DO_LIST.append(newTask)
-    print("Task Added")
-    print(TO_DO_LIST)
-    main()
+    print(f"\nTask Added:\n{newTask}")
 
 
+# View current to do list
 def viewList():
-    print('penis')
-    print(TO_DO_LIST)
-    main()
+    if len(TO_DO_LIST) == 0:
+        print("List is empty")
+    else:
+        # print("\n".join(str(b)for b in TO_DO_LIST))
+        enumTasks()
 
 
+# Complete a task (remove from list)
 def completeTask():
-    #complete individual task
-    removeTask = input("Please select which task to complete: ")
-    TO_DO_LIST.remove(removeTask)
-    main()
+    enumTasks()
+    while True:
+        removeTask = int(input("Please select which task to complete: "))
+        if int(removeTask):
+            TO_DO_LIST.pop(removeTask - 1)
+            print(f"Task Completed: {removeTask}")
+            displayMenu()
+        else:
+            print("Please enter a number\n")
+        break
+    
 
 
-def exit():
-     print("OHHHHH MY GOD MY WIENER IS SOOOOO SMALL BROOOOOO")
-     return
+# Exit the program
+def exitProgram():
+     print("goodbye")
 
-
+# Main function handles input and input validation
+#TODO: handle type checking, currently entering non number breaks program
 def main():
         # print("\nPlease select an option by entering the corresponding number. \n") 
         displayMenu()
         while True:
-            userInput = int(input("\nPlease select an option by entering a number between 1 and 4:"))
-            if userInput < 0:
+            menuChoice = int(input("\nPlease select an option by entering a number between 1 and 4:"))
+            if menuChoice < 1:
                 print("Please enter a number between 1 and 4")
-            elif userInput > 4:
+            elif menuChoice > 4:
                 print("Please enter a number between 1 and 4")
             else:
-                if userInput == 1:
-                    print('view')
+                if menuChoice == 1:
                     viewList()
-                elif userInput == 2:
-                    print('add')
+                elif menuChoice == 2:
                     addTask()
-                elif userInput == 3:
-                    print('complete')
+                elif menuChoice == 3:
                     completeTask()
                 else:
-                    if userInput == 4:
-                        print('exit')
-                        exit()
+                    if menuChoice == 4:
+                        exitProgram()
                         break
 main()
