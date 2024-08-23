@@ -1,4 +1,4 @@
-#TODOLIST
+#taskList
     # Users can add, view, complete and remove tasks
     # program will loop
     
@@ -19,70 +19,72 @@
     # Handle Each Option
     # Loop Until Exit
 
-TO_DO_LIST = []
+taskList = []
 
-MENU_OPTIONS = ["1. View Tasks", "2. Add New Task", "3. Complete Task", "4. Exit"]
+menuOptions = ["1. View Tasks", "2. Add New Task", "3. Complete Task", "4. Exit"]
 
 
 # Loop through tasks assigning a number each task 
 def enumTasks():
-    for index, newTask in enumerate(TO_DO_LIST):
+    for index, newTask in enumerate(taskList):
         print(f"{index + 1}. {newTask}")
 
 
 # Display Menu
 def displayMenu():
-    print(('\n'.join(str(a)for a in MENU_OPTIONS)))
+    print(('\n'.join(str(a)for a in menuOptions)))
 
 
 # Add a new task
 def addTask():
     newTask = input("Please add a task: ")
-    TO_DO_LIST.append(newTask)
+    taskList.append(newTask)
     print(f"\nTask Added:\n{newTask}")
+
 #TODO: Prevent users from being able to enter blank task
+#TODO: Print menu options every time user is prompted to select an option
 
 # View current to do list
 def viewList():
-    if len(TO_DO_LIST) == 0:
+    if len(taskList) == 0:
         print("List is empty")
     else:
-        # print("\n".join(str(b)for b in TO_DO_LIST))
+        # print("\n".join(str(b)for b in taskList))
         enumTasks()
 
+
+def checkToDoLength(): 
+    if len(taskList) == 0:
+                print('List is empty! Returning to main menu...')
+                return main()
+
+# def removeTask():
 
 # Complete a task (remove from list)
 def completeTask():
     enumTasks()
     while True:
         
-        print(f'Please enter a number between 1 and {len(TO_DO_LIST)}.')
+        print(f'Please enter a number between 1 and {len(taskList)}.')
         removeTask = int(input("Please select which task to complete: "))
 
         try:
             if int(removeTask):
-                completedTask = TO_DO_LIST.pop(removeTask - 1)
+                completedTask = taskList.pop(removeTask - 1)
                 print(f"Task Completed: {completedTask}\n")
-                print(f"Number of remaining tasks: {len(TO_DO_LIST)}\n")
-                    
+                print(f"Number of remaining tasks: {len(taskList)}\n")
+                return checkToDoLength()
             elif removeTask == '':
                 print('Please enter a number\n')
             else:
                 print("Please enter a number\n")
         except IndexError:
-            if len(TO_DO_LIST) < 1:
-                print(f'Please enter a number between 1 and {len(TO_DO_LIST)}')
-            else:
-                #TODO: Add option for user to return to main menu
-                #TODO: Handle behavior when all tasks removed -> return to main menu
-                # if removeTask == 99:
-                #     displayMenu()
-                continue
-    
+            checkToDoLength()
+
 
 # Exit the program
 def exitProgram():
-     print("goodbye")
+    print("goodbye")
 
 # Main function handles user input to select menu options and input validation
 def main():
@@ -95,23 +97,20 @@ def main():
             except ValueError:
                 print("\nPlease enter a valid number between 1 and 4")
                 continue
-            #TODO: Refactor, checking if menuChoice is between 1 and 4 is redundant and can make code harder to maintain
-            if menuChoice < 1:
-                print("Please enter a number between 1 and 4")
-            elif menuChoice > 4:
+            if menuChoice < 1 and menuChoice > 4:
                 print("Please enter a number between 1 and 4")
             else:
-                if menuChoice == 1:
-                    viewList()
-                elif menuChoice == 2:
-                    addTask()
-                elif menuChoice == 3:
-                    if len(TO_DO_LIST) == 0:
-                        print('To Do list is empty')
-                    else:
-                        completeTask()
-                else:
-                    if menuChoice == 4:
+                match menuChoice:
+                    case 1:
+                        viewList()
+                    case 2:
+                        addTask()
+                    case 3:
+                        if len(taskList) == 0:
+                            print("To Do list is empty")
+                        else:
+                            completeTask()
+                    case 4:
                         exitProgram()
                         break
 main()
@@ -121,7 +120,7 @@ main()
 # Code Review: Identifying Potential Bad Habits
 
 #     Code Duplication:
-#         ! Observation: There is some duplication in how you handle menu choices and validation within the main() function. Specifically, the checks for valid input (menuChoice < 1 and menuChoice > 4) could be combined or handled more efficiently.
+#         DONE Observation: There is some duplication in how you handle menu choices and validation within the main() function. Specifically, the checks for valid input (menuChoice < 1 and menuChoice > 4) could be combined or handled more efficiently.
 #         TODO: Suggestion: Look for ways to reduce repetition by combining conditions or creating helper functions. This will make your code cleaner and easier to maintain.
 
 #     Error Handling:
@@ -137,8 +136,8 @@ main()
 #         #TODO Suggestion: Ensure that all user inputs are validated before processing. For example, in addTask(), prevent the addition of empty tasks. In completeTask(), ensure that the selected task number is valid before attempting to remove it.
 
 #     Naming Conventions:
-#         ! Observation: The names of your functions and variables are generally clear and descriptive, but there’s a mix of styles (e.g., TO_DO_LIST vs. menuChoice).
-#         #TODO Suggestion: Stick to a consistent naming convention throughout your code. For example, use snake_case for variables and function names (e.g., to_do_list, menu_choice). Reserve all-uppercase names for constants.
+#         ! Observation: The names of your functions and variables are generally clear and descriptive, but there’s a mix of styles (e.g., taskList vs. menuChoice).
+#         #TODO Suggestion: Stick to a consistent naming convention throughout your code. For example, use snake_case for variables and function names (e.g., taskList, menu_choice). Reserve all-uppercase names for constants.
 
 #     Commenting and TODOs:
 #         ! Observation: Your comments and TODOs are clear and helpful, which is a good habit. However, some comments (e.g., “# Loop through tasks assigning a number each task”) could be refined or removed if they simply restate what the code is doing.
